@@ -5,13 +5,13 @@ export function SnapshotCards({ today, history, myGold }) {
 
     // Card 1: Best Sell Day (22 Ct) in last 90 days
     const best = bestSellDay(history, 'gold22ct');
-    const bestPrice = best ? sellTola(best.gold22ct) : 0;
+    const bestPrice = best ? sellTola(best.gold22ct, 'gold22ct') : 0;
     const bestDate = best ? formatDateFull(best.date) : 'N/A';
 
     // Card 2: Worst Day in Last 30 Days
     const last30 = history.slice(-30);
     const worst = worstSellDay(last30, 'gold22ct');
-    const worstPrice = worst ? sellTola(worst.gold22ct) : 0;
+    const worstPrice = worst ? sellTola(worst.gold22ct, 'gold22ct') : 0;
     const worstDate = worst ? formatDateFull(worst.date) : 'N/A';
 
     // Card 3: Price Change This Month

@@ -6,7 +6,7 @@ export function RateCard({ category, today, yesterday }) {
 
     const perGram = today[category];
     const tola = toTola(perGram);
-    const sell = sellTola(perGram);
+    const sell = sellTola(perGram, category);
 
     const yesterdayPerGram = yesterday?.[category] || 0;
     const change = perGram - yesterdayPerGram;

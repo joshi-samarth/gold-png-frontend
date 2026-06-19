@@ -5,18 +5,25 @@ export const METALS = [
     { key: 'gold18ct', label: 'Gold 18 Ct', sub: '750 purity', defaultTola: 14.263 },
 ];
 
-export const CUT = 0.03;
+// Metal-specific dealer cuts
+export const DEALER_CUTS = {
+    gold22ct: 0.03,
+    gold24ct995: 0.04,
+    gold18ct: 0.03
+};
+
+export const getDealerCut = (metalKey) => DEALER_CUTS[metalKey] || 0.03;
 
 export const toTola = (g) => g != null ? parseFloat((g * 10).toFixed(2)) : null;
-export const sellTola = (g) => g != null ? Math.round(g * 10 * (1 - CUT)) : null;
+export const sellTola = (g, metalKey = 'gold22ct') => g != null ? Math.round(g * 10 * (1 - getDealerCut(metalKey))) : null;
 export const fmt = (n) => n != null ? '₹' + Math.round(n).toLocaleString('en-IN') : '—';
 
 // Portfolio value on a given day's rate record
 export function portfolioValue(record, myGold) {
     if (!record) return null;
-    const v22 = sellTola(record.gold22ct) * (myGold?.gold22ct || 13.783);
-    const v24 = sellTola(record.gold24ct995) * (myGold?.gold24ct || 8);
-    const v18 = sellTola(record.gold18ct) * (myGold?.gold18ct || 14.263);
+    const v22 = sellTola(record.gold22ct, 'gold22ct') * (myGold?.gold22ct || 13.783);
+    const v24 = sellTola(record.gold24ct995, 'gold24ct995') * (myGold?.gold24ct || 8);
+    const v18 = sellTola(record.gold18ct, 'gold18ct') * (myGold?.gold18ct || 14.263);
     return Math.round(v22 + v24 + v18);
 }
 
@@ -111,8 +118,8 @@ export function generateInsights(today, history, myGold) {
     const best = bestSellDay(last30, 'gold22ct');
     if (best) {
         const bestDate = formatDate(best.date);
-        const bestPrice = sellTola(best.gold22ct);
-        const todayPrice = sellTola(today.gold22ct);
+        const bestPrice = sellTola(best.gold22ct, 'gold22ct');
+        const todayPrice = sellTola(today.gold22ct, 'gold22ct');
         const diff = Math.round(todayPrice - bestPrice);
         insights.push({
             icon: '📅',
@@ -123,9 +130,9 @@ export function generateInsights(today, history, myGold) {
 
     // Biggest holding
     const holdings = [
-        { label: '22 Ct', value: sellTola(today.gold22ct) * (myGold?.gold22ct || 13.783) },
-        { label: '24 Ct', value: sellTola(today.gold24ct995) * (myGold?.gold24ct || 8) },
-        { label: '18 Ct', value: sellTola(today.gold18ct) * (myGold?.gold18ct || 14.263) },
+        { label: '22 Ct', value: sellTola(today.gold22ct, 'gold22ct') * (myGold?.gold22ct || 13.783) },
+        { label: '24 Ct', value: sellTola(today.gold24ct995, 'gold24ct995') * (myGold?.gold24ct || 8) },
+        { label: '18 Ct', value: sellTola(today.gold18ct, 'gold18ct') * (myGold?.gold18ct || 14.263) },
     ].sort((a, b) => b.value - a.value);
 
     if (holdings[0].value > 0) {

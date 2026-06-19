@@ -20,7 +20,7 @@ export function MetalTable({ today, yesterday }) {
                     {metals.map((metal, index) => {
                         const perGram = today[metal];
                         const tola = toTola(perGram);
-                        const sell = sellTola(perGram);
+                        const sell = sellTola(perGram, metal);
 
                         return (
                             <tr key={metal} className={`border-b border-border transition-colors ${index % 2 === 0 ? 'bg-bg-secondary' : 'bg-bg'

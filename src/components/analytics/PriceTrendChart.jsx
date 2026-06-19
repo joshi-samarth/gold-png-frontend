@@ -57,12 +57,12 @@ export function PriceTrendChart({ history }) {
         date: formatDate(record.date),
         rawDate: record.date,
         market: toTola(record[selectedMetal]),
-        sell: sellTola(record[selectedMetal])
+        sell: sellTola(record[selectedMetal], selectedMetal)
     }));
 
     // Find best day in selected period
     const best = bestSellDay(getPeriodData(), selectedMetal);
-    const bestPrice = best ? sellTola(best[selectedMetal]) : 0;
+    const bestPrice = best ? sellTola(best[selectedMetal], selectedMetal) : 0;
     const bestDateStr = best ? formatDate(best.date) : '';
 
     // Calculate period change

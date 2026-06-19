@@ -42,7 +42,7 @@ export function MyGoldPage({ today, myGold, loading, onRefresh }) {
         const fieldName = metal === 'gold24ct995' ? 'gold24ct' : metal;
         const tola = tempGold[fieldName] || 0;
         const rate = today[metal];
-        const sell = sellTola(rate);
+        const sell = sellTola(rate, metal);
         return sum + Math.round(sell * tola);
     }, 0);
 

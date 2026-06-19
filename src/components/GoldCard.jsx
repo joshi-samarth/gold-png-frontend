@@ -1,7 +1,7 @@
 import { fmt, sellTola, metalNames, metalPurity } from '../utils';
 
 export function GoldCard({ category, rate, currentTola, onTolasChange }) {
-    const sellRate = sellTola(rate);
+    const sellRate = sellTola(rate, category);
     const currentValue = Math.round(sellRate * currentTola);
 
     return (

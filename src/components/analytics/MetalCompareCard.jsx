@@ -4,9 +4,9 @@ export function MetalCompareCard({ today }) {
     if (!today) return null;
 
     // Calculate sell prices
-    const sell22 = sellTola(today.gold22ct);
-    const sell24 = sellTola(today.gold24ct995);
-    const sell18 = sellTola(today.gold18ct);
+    const sell22 = sellTola(today.gold22ct, 'gold22ct');
+    const sell24 = sellTola(today.gold24ct995, 'gold24ct995');
+    const sell18 = sellTola(today.gold18ct, 'gold18ct');
 
     // Calculate market prices (toTola already multiplies by 10)
     const market22 = toTola(today.gold22ct);

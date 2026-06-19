@@ -59,7 +59,7 @@ export function SellModal({ isOpen, onClose, today, myGold, onSuccess }) {
     const fieldName = category === 'gold24ct995' ? 'gold24ct' : category;
     const currentTola = myGold?.[fieldName] || 0;
     const rate = today?.[category] || 0;
-    const sellRate = sellTola(rate);
+    const sellRate = sellTola(rate, category);
 
     let preview = null;
     if (paymentType === 'today') {
